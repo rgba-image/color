@@ -1,0 +1,31 @@
+{
+  "name": "@rgba-image/color",
+  "version": "0.1.0",
+  "description": "Color operations",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "tsc && mocha ./dist/test",
+    "coverage": "tsc && nyc --reporter=html --reporter=text mocha ./dist/test"
+  },
+  "nyc": {
+    "exclude": [
+      "./dist/test"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rgba-image/color.git"
+  },
+  "keywords": [],
+  "author": "Nik Coughlin <nrkn.com@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rgba-image/color/issues"
+  },
+  "homepage": "https://github.com/rgba-image/color#readme",
+  "dependencies": {
+    "@rgba-image/common": "^0.1.12"
+  }
+}
