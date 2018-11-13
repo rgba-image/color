@@ -58,8 +58,7 @@ exports.contrast = (r, g, b, a, amount) => {
     a = a | 0;
     amount = amount < -1 ? -1 : amount;
     amount = amount > 1 ? 1 : amount;
-    amount *= 255;
-    const factor = (259 * (amount + 255)) / (255 * (259 - amount));
+    const factor = (amount + 1) / (1 - amount);
     r = common_1.clampByte(factor * (r - 127) + 127);
     g = common_1.clampByte(factor * (g - 127) + 127);
     b = common_1.clampByte(factor * (b - 127) + 127);
@@ -72,8 +71,7 @@ exports.contrastUint32 = (r, g, b, a, amount) => {
     a = a | 0;
     amount = amount < -1 ? -1 : amount;
     amount = amount > 1 ? 1 : amount;
-    amount *= 255;
-    const factor = (259 * (amount + 255)) / (255 * (259 - amount));
+    const factor = (amount + 1) / (1 - amount);
     r = common_1.clampByte(factor * (r - 127) + 127);
     g = common_1.clampByte(factor * (g - 127) + 127);
     b = common_1.clampByte(factor * (b - 127) + 127);
@@ -82,8 +80,7 @@ exports.contrastUint32 = (r, g, b, a, amount) => {
 exports.contrastChannel = (source, amount) => {
     amount = amount < -1 ? -1 : amount;
     amount = amount > 1 ? 1 : amount;
-    amount *= 255;
-    const factor = (259 * (amount + 255)) / (255 * (259 - amount));
+    const factor = (amount + 1) / (1 - amount);
     return common_1.clampByte(factor * (source - 127) + 127);
 };
 exports.posterize = (r, g, b, a, amount) => {

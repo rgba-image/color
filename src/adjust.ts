@@ -70,9 +70,8 @@ export const contrast: AdjustRgba = ( r: number, g: number, b: number, a: number
 
   amount = amount < -1 ? -1 : amount
   amount = amount > 1 ? 1 : amount
-  amount *= 255
 
-  const factor = ( 259 * ( amount + 255 ) ) / ( 255 * ( 259 - amount ) )
+  const factor = ( amount + 1 ) / ( 1 - amount )
 
   r = clampByte( factor * ( r - 127 ) + 127 )
   g = clampByte( factor * ( g - 127 ) + 127 )
@@ -89,14 +88,12 @@ export const contrastUint32: AdjustRgbaUint32 = ( r: number, g: number, b: numbe
 
   amount = amount < -1 ? -1 : amount
   amount = amount > 1 ? 1 : amount
-  amount *= 255
 
-  const factor = ( 259 * ( amount + 255 ) ) / ( 255 * ( 259 - amount ) )
+  const factor = ( amount + 1 ) / ( 1 - amount )
 
   r = clampByte( factor * ( r - 127 ) + 127 )
   g = clampByte( factor * ( g - 127 ) + 127 )
   b = clampByte( factor * ( b - 127 ) + 127 )
-
 
   return rgbaToUint32( r, g, b, a, isLittleEndian )
 }
@@ -104,9 +101,8 @@ export const contrastUint32: AdjustRgbaUint32 = ( r: number, g: number, b: numbe
 export const contrastChannel: AdjustChannel = ( source: number, amount: number ) => {
   amount = amount < -1 ? -1 : amount
   amount = amount > 1 ? 1 : amount
-  amount *= 255
 
-  const factor = ( 259 * ( amount + 255 ) ) / ( 255 * ( 259 - amount ) )
+  const factor = ( amount + 1 ) / ( 1 - amount )
 
   return clampByte( factor * ( source - 127 ) + 127 )
 }

@@ -1,6 +1,6 @@
 import * as assert from 'assert'
 import * as fs from 'fs'
-import { fromPng } from '@rgba-image/png'
+import { fromPng, toPng } from '@rgba-image/png'
 import { setRegion, setRegionUint32 } from '@rgba-image/pixel'
 import {
   brightness, brightnessUint32, brightnessChannel, contrast, contrastUint32,
