@@ -1,7 +1,8 @@
 import {
-  rgbaToUint32, isLittleEndian, MapRgba, MapRgbaUint32
+  rgbaToUint32, isLittleEndian, MapRgba, MapRgbaUint32, clampByte
 } from '@rgba-image/common'
-import { MapChannel } from '@rgba-image/common/dist/types';
+
+import { MapChannel } from '@rgba-image/common/dist/types'
 
 export const grayscale: MapRgba = ( r: number, g: number, b: number, a: number ) => {
   r = r | 0
@@ -31,11 +32,12 @@ export const sepia: MapRgba = ( r: number, g: number, b: number, a: number ) => 
   b = b | 0
   a = a | 0
 
-  r = r * 0.393 + g * 0.769 + b * 0.189
-  g = r * 0.349 + g * 0.686 + b * 0.168
-  b = r * 0.272 + g * 0.534 + b * 0.131
-
-  return [ r | 0, g | 0, b | 0, a ]
+  return [
+    clampByte( r * 0.393 + g * 0.769 + b * 0.189 ),
+    clampByte( r * 0.349 + g * 0.686 + b * 0.168 ),
+    clampByte( r * 0.272 + g * 0.534 + b * 0.131 ),
+    a
+  ]
 }
 
 export const sepiaUint32: MapRgbaUint32 = ( r: number, g: number, b: number, a: number ) => {
@@ -44,11 +46,13 @@ export const sepiaUint32: MapRgbaUint32 = ( r: number, g: number, b: number, a: 
   b = b | 0
   a = a | 0
 
-  r = r * 0.393 + g * 0.769 + b * 0.189
-  g = r * 0.349 + g * 0.686 + b * 0.168
-  b = r * 0.272 + g * 0.534 + b * 0.131
-
-  return rgbaToUint32( r, g, b, a, isLittleEndian )
+  return rgbaToUint32(
+    clampByte( r * 0.393 + g * 0.769 + b * 0.189 ),
+    clampByte( r * 0.349 + g * 0.686 + b * 0.168 ),
+    clampByte( r * 0.272 + g * 0.534 + b * 0.131 ),
+    a,
+    isLittleEndian
+  )
 }
 
 export const invert: MapRgba = ( r: number, g: number, b: number, a: number ) => {

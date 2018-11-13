@@ -1,10 +1,10 @@
-import { AdjustRgba, AdjustRgbaUint32 } from '@rgba-image/common';
-import { AdjustChannel } from '@rgba-image/common/dist/types';
+import { AdjustRgba, AdjustRgbaUint32, AdjustChannel } from '@rgba-image/common';
 export declare const brightness: AdjustRgba;
 export declare const brightnessUint32: AdjustRgbaUint32;
 export declare const brightnessChannel: AdjustChannel;
-export declare const constrast: AdjustRgba;
-export declare const constrastUint32: AdjustRgbaUint32;
+export declare const contrast: AdjustRgba;
+export declare const contrastUint32: AdjustRgbaUint32;
+export declare const contrastChannel: AdjustChannel;
 export declare const posterize: AdjustRgba;
 export declare const posterizeUint32: AdjustRgbaUint32;
 export declare const posterizeChannel: AdjustChannel;

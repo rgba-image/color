@@ -1,4 +1,8 @@
-import { RgbaStop, Rgba, isRgbaStop, RgbaUint32Stop, uint32ToRgba, isLittleEndian, ChannelStop, isRgbaUint32Stop, isChannelStop } from '@rgba-image/common'
+import {
+  RgbaStop, Rgba, isRgbaStop, RgbaUint32Stop, uint32ToRgba, isLittleEndian,
+  ChannelStop, isRgbaUint32Stop, isChannelStop
+} from '@rgba-image/common'
+
 import { mix, mixUint32, mixChannel } from './mix'
 
 export const gradientRgba = ( stops: RgbaStop[], position: number ): Rgba => {
@@ -85,32 +89,27 @@ export const gradientChannel = ( stops: ChannelStop[], position: number ): numbe
 const findBoundingIndices = ( position: number, sortedStops: number[][], positionIndex = 4 ): [ number, number ] => {
   const { length } = sortedStops
 
-  if ( length === 0 ) throw Error( 'No positions' )
   if ( length === 1 ) return [ 0, 0 ]
-  if ( sortedStops[ 0 ][ positionIndex ] > position ) return [ 0, 0 ]
-  if ( sortedStops[ length - 1 ][ positionIndex ] < position )
+  if ( length && sortedStops[ 0 ][ positionIndex ] > position ) return [ 0, 0 ]
+  if ( length && sortedStops[ length - 1 ][ positionIndex ] < position )
     return [ length - 1, length - 1 ]
-
-  let result: [ number, number ] = [ NaN, NaN ]
 
   for ( let i = 0; i < length; i++ ) {
     const current = sortedStops[ i ]
     const next = sortedStops[ i + 1 ]
 
     if ( current[ positionIndex ] === position ){
-      result = [ i, i ]
-      break
+      return [ i, i ]
     }
 
     if (
       current[ positionIndex ] < position && next[ positionIndex ] > position
     ){
-      result = [ i, i + 1 ]
-      break
+      return [ i, i + 1 ]
     }
   }
 
-  return result
+  throw Error( 'No positions' )
 }
 
 const sortStops = ( stops: number[][], positionIndex = 4 ) =>

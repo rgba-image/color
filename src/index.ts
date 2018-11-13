@@ -1,5 +1,5 @@
 export {
-  brightness, brightnessUint32, brightnessChannel, constrast, constrastUint32,
+  brightness, brightnessUint32, brightnessChannel, contrast, contrastUint32,
   contrastChannel, posterize, posterizeUint32, posterizeChannel, opacity,
   opacityUint32
 } from './adjust'

@@ -22,20 +22,19 @@ exports.sepia = (r, g, b, a) => {
     g = g | 0;
     b = b | 0;
     a = a | 0;
-    r = r * 0.393 + g * 0.769 + b * 0.189;
-    g = r * 0.349 + g * 0.686 + b * 0.168;
-    b = r * 0.272 + g * 0.534 + b * 0.131;
-    return [r | 0, g | 0, b | 0, a];
+    return [
+        common_1.clampByte(r * 0.393 + g * 0.769 + b * 0.189),
+        common_1.clampByte(r * 0.349 + g * 0.686 + b * 0.168),
+        common_1.clampByte(r * 0.272 + g * 0.534 + b * 0.131),
+        a
+    ];
 };
 exports.sepiaUint32 = (r, g, b, a) => {
     r = r | 0;
     g = g | 0;
     b = b | 0;
     a = a | 0;
-    r = r * 0.393 + g * 0.769 + b * 0.189;
-    g = r * 0.349 + g * 0.686 + b * 0.168;
-    b = r * 0.272 + g * 0.534 + b * 0.131;
-    return common_1.rgbaToUint32(r, g, b, a, common_1.isLittleEndian);
+    return common_1.rgbaToUint32(common_1.clampByte(r * 0.393 + g * 0.769 + b * 0.189), common_1.clampByte(r * 0.349 + g * 0.686 + b * 0.168), common_1.clampByte(r * 0.272 + g * 0.534 + b * 0.131), a, common_1.isLittleEndian);
 };
 exports.invert = (r, g, b, a) => {
     r = r | 0;
