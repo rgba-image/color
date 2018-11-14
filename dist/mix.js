@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@rgba-image/common");
-exports.mix = (r0, g0, b0, a0, r1, g1, b1, a1, amount) => {
+exports.mix = (r0, g0, b0, a0, r1, g1, b1, a1, amount = 0.5) => {
     r0 = r0 | 0;
     g0 = g0 | 0;
     b0 = b0 | 0;
@@ -18,7 +18,7 @@ exports.mix = (r0, g0, b0, a0, r1, g1, b1, a1, amount) => {
     const a = (a1 - a0) * amount + a0;
     return [r | 0, g | 0, b | 0, a | 0];
 };
-exports.mixUint32 = (r0, g0, b0, a0, r1, g1, b1, a1, amount) => {
+exports.mixUint32 = (r0, g0, b0, a0, r1, g1, b1, a1, amount = 0.5) => {
     r0 = r0 | 0;
     g0 = g0 | 0;
     b0 = b0 | 0;
@@ -35,7 +35,7 @@ exports.mixUint32 = (r0, g0, b0, a0, r1, g1, b1, a1, amount) => {
     const a = (a1 - a0) * amount + a0;
     return common_1.rgbaToUint32(r, g, b, a, common_1.isLittleEndian);
 };
-exports.mixChannel = (c0, c1, amount) => {
+exports.mixChannel = (c0, c1, amount = 0.5) => {
     c0 = c0 | 0;
     c1 = c1 | 0;
     amount = Math.max(0, amount);

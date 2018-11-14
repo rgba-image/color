@@ -19,11 +19,12 @@ export {
 export {
   COMPOSITE_NORMAL, COMPOSITE_MULTIPLY, COMPOSITE_SCREEN, COMPOSITE_OVERLAY,
   COMPOSITE_DARKEN, COMPOSITE_LIGHTEN, COMPOSITE_HARD_LIGHT,
-  COMPOSITE_DIFFERENCE, COMPOSITE_EXCLUSION
+  COMPOSITE_DIFFERENCE, COMPOSITE_EXCLUSION,
 } from '@rgba-image/common'
 
 export {
-  gradientRgba, gradientRgbaUInt32, gradientChannel
+  gradientRgba, gradientRgbaUInt32, gradientChannel, rgbaValuesToStops,
+  rgbaUint32ValuesToStops, channelValuesToStops
 } from './gradient'
 
 export {

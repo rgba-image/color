@@ -86,6 +86,18 @@ export const gradientChannel = ( stops: ChannelStop[], position: number ): numbe
   return color
 }
 
+export const rgbaValuesToStops = ( colors: Rgba[] ) => {
+  return <RgbaStop[]>colorsToStops( colors )
+}
+
+export const rgbaUint32ValuesToStops = ( colors: number[] ) => {
+  return <RgbaUint32Stop[]>colorsToStops( colors.map( v => [ v ] ), 1 )
+}
+
+export const channelValuesToStops = ( colors: number[] ) => {
+  return <ChannelStop[]>colorsToStops( colors.map( v => [ v ] ), 1 )
+}
+
 const findBoundingIndices = ( position: number, sortedStops: number[][], positionIndex = 4 ): [ number, number ] => {
   const { length } = sortedStops
 
@@ -114,3 +126,26 @@ const findBoundingIndices = ( position: number, sortedStops: number[][], positio
 
 const sortStops = ( stops: number[][], positionIndex = 4 ) =>
   stops.slice().sort( ( a, b ) => a[ positionIndex ] - b[ positionIndex ] )
+
+const colorsToStops = ( values: number[][], channels = 4 ) => {
+  if( values.length === 0 ) throw Error( 'No colors provided' )
+
+  values = values.map( value => value.slice() )
+
+  if( values.length === 1 ){
+    values[ 0 ][ channels ] = 0.5
+
+    return values
+  }
+
+  const step = 1 / ( values.length - 1 )
+
+  values[ 0 ][ channels ] = 0
+  values[ values.length - 1 ][ channels ] = 1
+
+  for( let i = 1; i < values.length - 1; i++ ){
+    values[ i ][ channels ] = step * i
+  }
+
+  return values
+}

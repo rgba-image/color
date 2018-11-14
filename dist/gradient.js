@@ -61,6 +61,15 @@ exports.gradientChannel = (stops, position) => {
     const color = mix_1.mixChannel(c0, c1, amount);
     return color;
 };
+exports.rgbaValuesToStops = (colors) => {
+    return colorsToStops(colors);
+};
+exports.rgbaUint32ValuesToStops = (colors) => {
+    return colorsToStops(colors.map(v => [v]), 1);
+};
+exports.channelValuesToStops = (colors) => {
+    return colorsToStops(colors.map(v => [v]), 1);
+};
 const findBoundingIndices = (position, sortedStops, positionIndex = 4) => {
     const { length } = sortedStops;
     if (length === 1)
@@ -82,4 +91,20 @@ const findBoundingIndices = (position, sortedStops, positionIndex = 4) => {
     throw Error('No positions');
 };
 const sortStops = (stops, positionIndex = 4) => stops.slice().sort((a, b) => a[positionIndex] - b[positionIndex]);
+const colorsToStops = (values, channels = 4) => {
+    if (values.length === 0)
+        throw Error('No colors provided');
+    values = values.map(value => value.slice());
+    if (values.length === 1) {
+        values[0][channels] = 0.5;
+        return values;
+    }
+    const step = 1 / (values.length - 1);
+    values[0][channels] = 0;
+    values[values.length - 1][channels] = 1;
+    for (let i = 1; i < values.length - 1; i++) {
+        values[i][channels] = step * i;
+    }
+    return values;
+};
 //# sourceMappingURL=gradient.js.map

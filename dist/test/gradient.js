@@ -7,6 +7,7 @@ const png_1 = require("@rgba-image/png");
 const pixel_1 = require("@rgba-image/pixel");
 const common_1 = require("@rgba-image/common");
 const __1 = require("..");
+const gradient_1 = require("../gradient");
 const gradientRgbaPng = fs.readFileSync('./src/test/fixtures/gradient-rgba.png');
 const expectGradientRgba = png_1.fromPng(gradientRgbaPng);
 describe('color', () => {
@@ -96,11 +97,102 @@ describe('color', () => {
             const expect = [51, 153, 255, 128];
             assert.deepEqual(color, expect);
         });
+        it('rgbaValuesToStops 1', () => {
+            const colors = [
+                [51, 153, 255, 255]
+            ];
+            const expect = [
+                [51, 153, 255, 255, 0.5]
+            ];
+            const stops = gradient_1.rgbaValuesToStops(colors);
+            assert.deepEqual(stops, expect);
+        });
+        it('rgbaValuesToStops 2', () => {
+            const colors = [
+                [51, 153, 255, 255],
+                [255, 255, 255, 255]
+            ];
+            const expect = [
+                [51, 153, 255, 255, 0],
+                [255, 255, 255, 255, 1]
+            ];
+            const stops = gradient_1.rgbaValuesToStops(colors);
+            assert.deepEqual(stops, expect);
+        });
+        it('rgbaValuesToStops 3', () => {
+            const colors = [
+                [51, 153, 255, 255],
+                [51, 153, 255, 128],
+                [255, 255, 255, 255]
+            ];
+            const expect = [
+                [51, 153, 255, 255, 0],
+                [51, 153, 255, 128, 0.5],
+                [255, 255, 255, 255, 1]
+            ];
+            const stops = gradient_1.rgbaValuesToStops(colors);
+            assert.deepEqual(stops, expect);
+        });
+        it('rgbaValuesToStops 4', () => {
+            const colors = [
+                [51, 153, 255, 255],
+                [51, 153, 255, 128],
+                [255, 255, 255, 255],
+                [255, 255, 255, 128]
+            ];
+            const stops = gradient_1.rgbaValuesToStops(colors);
+            const secondPosition = (stops[1][4]).toFixed(2);
+            const thirdPosition = (stops[2][4]).toFixed(2);
+            assert.strictEqual(secondPosition, '0.33');
+            assert.strictEqual(thirdPosition, '0.67');
+        });
+        it('rgbaUint32ValuesToStops 1', () => {
+            const color = common_1.rgbaToUint32(51, 153, 255, 255, common_1.isLittleEndian);
+            const colors = [color];
+            const expect = [
+                [color, 0.5]
+            ];
+            const stops = gradient_1.rgbaUint32ValuesToStops(colors);
+            assert.deepEqual(stops, expect);
+        });
+        it('rgbaValuesToStops 3', () => {
+            const colors = [
+                common_1.rgbaToUint32(51, 153, 255, 255, common_1.isLittleEndian),
+                common_1.rgbaToUint32(51, 153, 255, 128, common_1.isLittleEndian),
+                common_1.rgbaToUint32(255, 255, 255, 255, common_1.isLittleEndian)
+            ];
+            const expect = [
+                [colors[0], 0],
+                [colors[1], 0.5],
+                [colors[2], 1]
+            ];
+            const stops = gradient_1.rgbaUint32ValuesToStops(colors);
+            assert.deepEqual(stops, expect);
+        });
+        it('channelValuesToStops 1', () => {
+            const colors = [51];
+            const expect = [
+                [51, 0.5]
+            ];
+            const stops = gradient_1.channelValuesToStops(colors);
+            assert.deepEqual(stops, expect);
+        });
+        it('rgbaValuesToStops 3', () => {
+            const colors = [51, 153, 255];
+            const expect = [
+                [colors[0], 0],
+                [colors[1], 0.5],
+                [colors[2], 1]
+            ];
+            const stops = gradient_1.channelValuesToStops(colors);
+            assert.deepEqual(stops, expect);
+        });
         it('bad arguments', () => {
             assert.throws(() => __1.gradientRgba([], 0));
             assert.throws(() => __1.gradientRgba([0], 0));
             assert.throws(() => __1.gradientRgbaUInt32([0], 0));
             assert.throws(() => __1.gradientChannel([0], 0));
+            assert.throws(() => gradient_1.rgbaValuesToStops([]));
         });
     });
 });

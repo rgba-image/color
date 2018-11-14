@@ -3,7 +3,7 @@ import { Rgba, rgbaToUint32, isLittleEndian } from '@rgba-image/common'
 export const mix = (
   r0: number, g0: number, b0: number, a0: number,
   r1: number, g1: number, b1: number, a1: number,
-  amount: number
+  amount = 0.5
 ) => {
   r0 = r0 | 0
   g0 = g0 | 0
@@ -28,7 +28,7 @@ export const mix = (
 export const mixUint32 = (
   r0: number, g0: number, b0: number, a0: number,
   r1: number, g1: number, b1: number, a1: number,
-  amount: number
+  amount = 0.5
 ) => {
   r0 = r0 | 0
   g0 = g0 | 0
@@ -50,7 +50,7 @@ export const mixUint32 = (
   return rgbaToUint32( r, g, b, a, isLittleEndian )
 }
 
-export const mixChannel = ( c0: number, c1: number, amount: number ) => {
+export const mixChannel = ( c0: number, c1: number, amount = 0.5 ) => {
   c0 = c0 | 0
   c1 = c1 | 0
 
